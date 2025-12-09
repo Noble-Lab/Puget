@@ -1,0 +1,24 @@
+# Experiment Settings
+device: "cuda"
+batch_size: 4
+num_workers: 4
+
+# Output
+output_path: "outputs/inference/hicfoundation_k562.npy"
+
+# Data Paths
+bedpe_path: "data/gene_annotations/human_anno_tss_filtered_192k_960k_test.bedpe"
+pkl_list_file: "data/accessions/hiclist_k562.csv"
+pkl_data_dir: "data/example_input"
+
+# Checkpoint Paths
+hic_encoder_ckpt: "data/model/hicfoundation_pretrain.pth.tar"
+regressor_ckpt: "data/model/hicfoundation_decoder.ckpt"
+
+# Model Params
+model:
+  name: "vit_large_patch16"
+  patch_size: 16
+  window_height: 192
+  window_width: 960
+  resolution: 1000

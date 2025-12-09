@@ -1,0 +1,25 @@
+# Experiment Settings
+device: "cuda"
+batch_size: 1
+num_workers: 1
+
+# Inputs
+targets_csv: "data/CRISPRi/CRISPRi_k562.csv"
+windows_pkl: "data/example_input/ENCFF621AIY.pkl"
+seq_indices_npy: "data/example_input/humanseq_test_indices.npy"
+k_median_npy: "data/CRISPRi/k562_expected_contacts.npy"
+
+# Output
+out_csv: "outputs/interpretation/perturbation/CRISPRi_k562_pred.csv"
+
+# Model Checkpoints
+enformer_ckpt: "data/model/retrain_enformer.pt"
+hic_encoder_ckpt: "data/model/hicfoundation_pretrain.pth.tar"
+regressor_ckpt: "data/model/puget_decoder.ckpt"
+
+# Model Parameters
+model:
+  name: "vit_large_patch16"
+  patch_size: 16
+  window_height: 192
+  window_width: 960

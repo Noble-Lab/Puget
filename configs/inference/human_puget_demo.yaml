@@ -1,0 +1,27 @@
+# Experiment Settings
+device: "cuda"
+batch_size: 4
+num_workers: 1
+
+# Output
+output_path: "outputs/inference/puget_demo.npy"
+
+# Data Paths
+bedpe_path: "data/gene_annotations/human_anno_tss_filtered_192k_960k_test.bedpe"
+pkl_list_file: "data/example_input/human_demo_accessions.csv"
+pkl_data_dir: "data/example_input"
+seq_indices_npy: "data/example_input/humanseq_test_indices.npy"
+
+# Model Checkpoints
+enformer_ckpt: "data/model/retrain_enformer.pt"
+hic_encoder_ckpt: "data/model/hicfoundation_pretrain.pth.tar"
+regressor_ckpt: "data/model/puget_decoder.ckpt"
+
+# Model Params
+model:
+  name: "vit_large_patch16"
+  patch_size: 16
+  window_height: 192
+  window_width: 960
+  resolution: 1000
+  seq_length: 192000

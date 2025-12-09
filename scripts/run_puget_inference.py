@@ -23,7 +23,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default=os.path.join(repo_root, "configs/inference/human_puget_testbio.yaml"),
+        default=os.path.join(repo_root, "configs/inference/human_puget_k562.yaml"),
         help="Path to YAML config file"
     )
     args = parser.parse_args()

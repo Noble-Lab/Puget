@@ -1,0 +1,43 @@
+name: Puget
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - openjdk
+
+  - pip:
+      - "--extra-index-url=https://download.pytorch.org/whl/cu126"
+      - torch
+      - torchvision
+      - torchaudio
+      - lightning
+      - torchmetrics
+      - torch-tb-profiler
+      - pytorch-msssim
+      - transformers
+      - einops>=0.3
+      - timm
+      - pandas
+      - numpy
+      - scipy
+      - captum
+      - scikit-image
+      - numba
+      - polars
+      - tensorboard
+      - wandb
+      - tqdm
+      - matplotlib
+      - seaborn
+      - Pillow
+      - pyBigWig
+      - PyYAML
+      - pyfaidx
+      - easydict
+      - simplejson
+      - opencv-python
+      - lvis
+      - hic-straw
+      - cooler
+      - cooltools

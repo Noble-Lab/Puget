@@ -25,7 +25,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default=os.path.join(repo_root, "configs/interpret/human_puget_saliency.yaml"),
+        default=os.path.join(repo_root, "configs/interpretation/k562_attribution.yaml"),
         help="Path to YAML config file"
     )
     args = parser.parse_args()

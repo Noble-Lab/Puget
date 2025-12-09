@@ -25,7 +25,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default=os.path.join(repo_root, "configs/interpret/human_puget_perturb.yaml"),
+        default=os.path.join(repo_root, "configs/interpretation/k562_perturbation.yaml"),
         help="Path to YAML config file"
     )
     args = parser.parse_args()

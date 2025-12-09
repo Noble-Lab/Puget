@@ -1,0 +1,14 @@
+# Experiment Settings
+device: "cuda"
+batch_size: 4
+num_workers: 0
+
+# Output
+output_path: "outputs/inference/enformer.npy"
+
+# Data Paths
+seq_indices_npy: "data/example_input/humanseq_test_indices.npy"
+
+# Checkpoint Paths
+enformer_ckpt: "data/model/retrain_enformer.pt"
+regressor_ckpt: "data/model/enformer_decoder.ckpt"
