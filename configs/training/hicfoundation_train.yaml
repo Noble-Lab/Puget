@@ -1,0 +1,32 @@
+seed: 42
+
+train_x: "processed_data/hic_embedding/trainseq_trainbio.npy"
+train_y: "processed_data/labels/label_trainseq_trainbio.npy"
+val_x: "processed_data/hic_embedding/valseq_valbio.npy"
+val_y: "processed_data/labels/label_valseq_valbio.npy"
+
+use_wandb: False               # Set to True to enable WandB logging
+wandb_project: "Puget"
+logger_name: "hicfoundation_cls_dim512_layer4_lr1e-4_batch64_seed42"
+logger_dir: "csv_logs"
+model_dir: "models/hicfoundation_decoder"
+
+proj_dim: 512
+mlp_ratio: 4.0
+num_heads: 16
+num_layers: 4
+pool_method: "cls"
+dropout_p: 0.2
+
+lr: 1.0e-4
+min_lr: 1.0e-7
+weight_decay: 1.0e-4
+warmup_epochs: 2
+decay_epochs: 18
+
+max_epochs: 20
+batch_size: 64
+num_workers: 16
+patience: 40
+val_check_interval: 0.5
+precision: "16-mixed"

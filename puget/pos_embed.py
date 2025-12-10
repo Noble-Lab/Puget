@@ -48,6 +48,11 @@ def get_1d_sincos_pos_embed(embed_dim: int, length: int, cls_token: bool = False
 
     return pe
 
+# ---------------------------------------------------------------------------------
+# This function is adapted from the HiCFoundation repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/model/pos_embed.py
+# License: Apache License 2.0
+# ---------------------------------------------------------------------------------
 def get_2d_sincos_pos_embed_rectangle(embed_dim: int,
                                       grid_hw: Tuple[int, int],
                                       cls_token: bool = False) -> np.ndarray:

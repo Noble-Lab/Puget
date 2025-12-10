@@ -51,6 +51,11 @@ class HiCFoundationEncoder(nn.Module):
         x = x.view(B, self.patch_rows, self.patch_cols, D)    # [B, Pr, Pc, D]
         return x
 
+# ------------------------------------------------------------------
+# The following function is adapted from the HiCFoundation repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/inference/main_worker.py
+# License: Apache License 2.0
+# ------------------------------------------------------------------
 def load_hic_encoder_only(
     checkpoint_path: str,
     model_name: str,

@@ -1,4 +1,8 @@
-# This script is adapted from https://github.com/Noble-Lab/HiCFoundation/blob/main/utils/hic2array.py
+# ---------------------------------------------------------------------------------
+# This file is adapted from the HiCFoundation repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/utils/hic2array.py
+# License: Apache License 2.0
+# ---------------------------------------------------------------------------------
 
 import numpy as np
 from scipy.sparse import coo_matrix

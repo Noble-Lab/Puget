@@ -1,4 +1,9 @@
-# The scripts are adapted from https://github.com/Noble-Lab/HiCFoundation_paper/blob/main/notebooks/pretrain_data.ipynb
+# ---------------------------------------------------------------------------------
+# This file is adapted from the HiCFoundation_paper repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation_paper/blob/main/notebooks/pretrain_data.ipynb
+# License: Apache License 2.0
+# ---------------------------------------------------------------------------------
+
 import pandas as pd
 import os
 import argparse

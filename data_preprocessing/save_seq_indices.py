@@ -6,6 +6,11 @@ import torch
 from enformer_pytorch import GenomeIntervalDataset
 from tqdm import tqdm
 
+# ------------------------------------------------------------------
+# The following function is adapted from the Enformer PyTorch repository.
+# Source: https://github.com/lucidrains/enformer-pytorch/blob/main/enformer_pytorch/data.py
+# License: MIT License
+# ------------------------------------------------------------------
 reverse_complement_map = torch.Tensor([3, 2, 1, 0, 4]).long()
 def seq_indices_reverse_complement(seq_indices):
     complement = reverse_complement_map[seq_indices.long()]

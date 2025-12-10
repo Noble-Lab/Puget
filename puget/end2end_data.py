@@ -11,8 +11,11 @@ from torch.utils.data import Dataset, DataLoader, TensorDataset
 import torchvision.transforms as T
 from enformer_pytorch import FastaInterval
 
-# seq_indices_to_one_hot adapted from enformer_pytorch codebase
-# https://github.com/lucidrains/enformer-pytorch
+# ------------------------------------------------------------------
+# The following function is adapted from the Enformer PyTorch repository.
+# Source: https://github.com/lucidrains/enformer-pytorch/blob/main/enformer_pytorch/data.py
+# License: MIT License
+# ------------------------------------------------------------------
 def seq_indices_to_one_hot(t, padding = -1):
     is_padding = t == padding
     t = t.clamp(min = 0)
@@ -58,6 +61,11 @@ def _biosample_from_path(p: str) -> str:
     name, _ = os.path.splitext(base)
     return name
 
+# ------------------------------------------------------------------
+# The following function is adapted from the HiCFoundation repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/data_processing/inference_dataset.py
+# License: Apache License 2.0
+# ------------------------------------------------------------------
 def _convert_rgb_from_log(data_log: np.ndarray, is_empty: bool) -> np.ndarray:
     """
     data_log: (H, W) in log10(count + 1)
@@ -94,7 +102,13 @@ def _dense_from_triplets(H, W, row: np.ndarray, col: np.ndarray, data: np.ndarra
     ).toarray()
     
     return dense
-    
+
+# ------------------------------------------------------------------
+# The following class is adapted from the HiCFoundation repository.
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/data_processing/inference_dataset.py
+# Source: https://github.com/Noble-Lab/HiCFoundation/blob/main/inference/main_worker.py
+# License: Apache License 2.0
+# ------------------------------------------------------------------ 
 class HiCSubmatDataset(Dataset):
     """
     Dataset that:

@@ -2,8 +2,11 @@
 **/.ipynb_checkpoints/*
 **/lightning_logs/*
 **/wandb_logs/*
+**/csv_logs/*
 **/jobs_record/*
 **/data/*
+**/processed_data/*
+**/models/*
 **/encode_data/*
 **/outputs/*
 *.bib

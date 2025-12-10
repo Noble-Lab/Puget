@@ -94,7 +94,7 @@ python data_preprocessing/hic2array.py encode_data/ENCFF621AIY.hic encode_data/E
 * `0`: **normalization** (`0` = NONE). Puget expects raw counts.
 * `2`: **mode** (`2` = SciPy sparse matrix, intra-chromosomal contacts only). This restricts extraction to cis-contacts to optimize storage.
 
-#### Step 3: Extract Model Inputs around the gene region
+#### Step 3: Extract Model Inputs around the Gene Region
 Generate the input windows (Hi-C maps and sequence) centered on your genes of interest.
 
 **A. Extract Hi-C Windows**
@@ -172,10 +172,52 @@ Curate a list of candidate enhancer locations as shown in `data/CRISPRi/CRISPRi_
 
 ```bash
 mkdir -p outputs/interpretation/perturbation
-
 python scripts/run_puget_perturbation.py --config configs/interpretation/k562_perturbation.yaml
 ```
 * **Output:** A CSV file saved inside `outputs/interpretation/perturbation` containing predicted expression for perturbed vs. non-perturbed Hi-C inputs, indicating the predicted change in gene expression following *in silico* knockout of candidate enhancers.
+
+## Model Training
+> **Note:** Most users do not need to retrain the model. The following steps are intended for users wishing to reproduce the manuscript results or train Puget on new datasets.
+
+As described in the manuscript, we freeze the Enformer and HiCFoundation encoders and train only the lightweight decoder. For computational efficiency, we first pre-compute and save the embeddings from these encoders, and then train the decoders on the cached embeddings.
+
+### 1. Pre-compute Embeddings & Labels
+Decoder training requires generating three key datasets: gene expression labels, pre-computed sequence embeddings, and pre-computed Hi-C embeddings.
+
+**A. Prepare Labels**
+1. Download RNA-seq TSV files from ENCODE using `data_preprocessing/download_rna_list.py` with the RNA accession list (`data/accessions/rnalist_human.csv`).
+2. Generate the labels using `data_preprocessing/prepare_expr_labels.py`.
+
+**B. Prepare Sequence Embeddings**
+1. Extract sequence inputs using `data_preprocessing/save_seq_indices.py` for both training genes (`data/gene_annotations/human_anno_tss_filtered_192k_train.bed`) and validation genes (`data/gene_annotations/human_anno_tss_filtered_192k_val.bed`).
+2. Generate sequence embeddings from these indices using `data_preprocessing/embed_sequence.py`.
+
+**C. Prepare Hi-C Embeddings**
+1. Download Hi-C files from ENCODE using `data_preprocessing/download_hic_list.py` with the Hi-C accession list (`data/accessions/hiclist_human.csv`) and convert .hic files to .pkl files using `data_preprocessing/run_hic2pkl_list.sh`.
+2. Extract Hi-C windows using `data_preprocessing/run_extract_windows.sh`. We extract windows for:
+    * **Training:** Training genes (`data/gene_annotations/human_anno_tss_filtered_192k_960k_train.bedpe`) in training biosamples (`data/accessions/human_train_accessions.csv`).
+    * **Validation:** Validation genes (`data/gene_annotations/human_anno_tss_filtered_192k_960k_val.bedpe`) in validation biosamples (`data/accessions/human_val_accessions.csv`).
+3. Generate Hi-C embeddings from these windows using `data_preprocessing/embed_hic.py`.
+
+> **Important:** The training configs assume outputs are saved to `processed_data/labels`, `processed_data/seq_embedding`, and `processed_data/hic_embedding`. If you save them elsewhere, please update the paths in the `.yaml` configuration files accordingly.
+
+### 2. Train Decoders
+Once labels and embeddings are generated, you can launch the training for the Puget decoder and the baseline decoders.
+
+**A. Puget Decoder**
+```bash
+python scripts/run_puget_training.py --config configs/training/puget_train.yaml
+```
+
+**B. Enformer Decoder**
+```bash
+python scripts/run_enformer_training.py --config configs/training/enformer_train.yaml
+```
+
+**C. HiCFoundation Decoder**
+```bash
+python scripts/run_hicfoundation_training.py --config configs/training/hicfoundation_train.yaml
+```
 
 ## How to cite
 If you use Puget in your research, please cite our manuscript,
