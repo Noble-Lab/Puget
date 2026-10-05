@@ -1,0 +1,75 @@
+run_name: puget_borzoi
+seed: 42
+train_biosamples: &id001
+- A673
+- Caco-2
+- Calu3
+- HCT116
+- HepG2
+- IMR-90
+- MCF 10A
+- MCF-7
+- OCI-LY7
+- PC-3
+- PC-9
+- Panc1
+- endothelial cell of umbilical vein
+- mammary epithelial cell
+val_biosamples: *id001
+train_label_group: traincell
+valid_label_group: traincell
+train_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_train.bedpe
+val_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_valid.bedpe
+train_seq: outputs/seq_embeddings/borzoi_embeddings_524k_1kb_mean/human_seq_embeddings_borzoi_rep0_524k_trunk_1kb_mean_train.npy
+val_seq: outputs/seq_embeddings/borzoi_embeddings_524k_1kb_mean/human_seq_embeddings_borzoi_rep0_524k_trunk_1kb_mean_valid.npy
+train_label: outputs/borzoi_data/traincell_traingene.npy
+val_label: outputs/borzoi_data/traincell_validgene.npy
+hic_root: outputs/hic_windows/puget_borzoi
+biosamples_csv: data/deeply_profiled.csv
+hic_transform: log
+window_height: 512
+window_width: 512
+embed_dim: 1536
+model:
+  input_norm: layernorm
+  proj_dim: 512
+  heads: 8
+  num_layers: 4
+  mlp_ratio: 4.0
+  dropout_p: 0.2
+  promoter_tokens: 4
+output_activation: softplus
+lr: 0.0001
+min_lr: 1.0e-07
+weight_decay: 0.01
+warmup_epochs: 2
+decay_epochs: 18
+max_epochs: 20
+batch_size: 128
+accumulate_grad_batches: 1
+num_workers: 4
+prefetch_factor: 1
+persistent_workers: true
+pin_memory: true
+preload_seq: false
+compile_model: false
+patience: 40
+val_check_interval: 0.5
+precision: 16-mixed
+gradient_clip_val: 1.0
+deterministic: false
+float32_matmul_precision: high
+accelerator: gpu
+devices: 1
+use_wandb: false
+wandb_project: PaperPugetSoftplus14Bio
+output_dir: outputs/borzoi_split
+n_cols: 512
+hic_semantics: oe_scale
+test_biosamples:
+- GM12878
+- K562
+test_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_test.bedpe
+test_seq: outputs/seq_embeddings/borzoi_embeddings_524k_1kb_mean/human_seq_embeddings_borzoi_rep0_524k_trunk_1kb_mean_test.npy
+test_label: outputs/borzoi_data/testcell_testgene.npy
+pred_dir: outputs/borzoi_split_inference/puget_borzoi

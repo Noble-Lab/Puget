@@ -1,0 +1,9 @@
+checkpoint: data/trained_models/enformer_split/seqonly_enformer_best.pt
+model_name: seq_only_enformer
+embedding_key: enformer_official_196k_post_pointwise
+split_family: enformer
+test_seq: outputs/seq_embeddings/enformer_embeddings_196k_1kb_mean/human_seq_embeddings_enformer_official_196k_post_pointwise_1kb_mean_test.npy
+test_bedpe: outputs/enformer_data/Enformer_genes_196k_196k_test.bedpe
+biosample_log: outputs/enformer_data/RNA_label_columns.log
+output_dir: outputs/enformer_split_inference/seq_only
+batch_size: 32

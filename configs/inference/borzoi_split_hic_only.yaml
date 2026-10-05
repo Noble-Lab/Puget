@@ -1,0 +1,6 @@
+training_config: configs/training/borzoi_split_hic_only.yaml
+checkpoint: data/trained_models/borzoi_split/hicfoundation_borzoi_best.ckpt
+output_dir: outputs/borzoi_split_inference/hic_only
+group: both
+batch_size: 128
+num_workers: 4

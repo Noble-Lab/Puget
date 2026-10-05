@@ -9,9 +9,19 @@ import os
 import argparse
 
 def parse_rnalist(rnalist_path):
-    rna_list = pd.read_csv(rnalist_path, names = ["RNA Accession"])
-    print(len(rna_list))
-    return rna_list["RNA Accession"].to_list()
+    rna_list = pd.read_csv(rnalist_path)
+    if "RNA-seq accession" in rna_list.columns:
+        accessions = rna_list["RNA-seq accession"]
+    elif len(rna_list.columns) == 1:
+        # Preserve support for the original headerless, one-column lists.
+        accessions = pd.read_csv(rnalist_path, header=None).iloc[:, 0]
+        accessions = accessions[~accessions.isin(("RNA Accession", "RNA-seq accession"))]
+    else:
+        raise ValueError(f"{rnalist_path} must contain an 'RNA-seq accession' column")
+    datasets = accessions.dropna().astype(str).str.strip()
+    datasets = datasets[datasets.ne("")].to_list()
+    print(len(datasets))
+    return datasets
    
 def download_encode(output_dir, url):
     root_path = os.getcwd()
@@ -29,7 +39,8 @@ def download_rna(dataset_list, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="Download RNA datasets based on provided CSV files.")
-    parser.add_argument("--rnalist_path", type=str, required=True, help="Path to the rna list file.")
+    parser.add_argument("--rnalist_path", type=str, required=True,
+                        help="Path to deeply_profiled.csv or a one-column RNA accession list.")
     parser.add_argument("--output_dir", type=str, required=True, help="Directory where downloaded RNA-seq files will be saved.")
 
     args = parser.parse_args()

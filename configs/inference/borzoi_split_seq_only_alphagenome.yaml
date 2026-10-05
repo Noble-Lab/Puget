@@ -1,0 +1,9 @@
+checkpoint: data/trained_models/borzoi_split/seqonly_alphagenome_best.pt
+model_name: seq_only_alphagenome
+embedding_key: alphagenome_fold1_524k_post_embedder
+split_family: borzoi
+test_seq: outputs/seq_embeddings/alphagenome_embeddings_524k_1kb_mean/human_seq_embeddings_alphagenome_fold1_524k_post_embedder_1kb_mean_test.npy
+test_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_test.bedpe
+biosample_log: outputs/borzoi_data/RNA_label_columns.log
+output_dir: outputs/borzoi_split_inference/seq_only_alphagenome
+batch_size: 32

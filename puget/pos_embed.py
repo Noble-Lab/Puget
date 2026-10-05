@@ -16,15 +16,6 @@ from torch import einsum
 from einops import rearrange
 
 def get_1d_sincos_pos_embed(embed_dim: int, length: int, cls_token: bool = False) -> np.ndarray:
-    """
-    Return a [length, D] (or [1+length, D]) matrix of fixed 1-D sine-cosine embeddings.
-
-    Args
-    ----
-    embed_dim : total embedding dimension D (must be even)
-    length    : sequence length N
-    cls_token : if True, prepend a zero-vector for a CLS token
-    """
     assert embed_dim % 2 == 0, "embed_dim must be divisible by 2"
     half_dim = embed_dim // 2
 
@@ -56,15 +47,6 @@ def get_1d_sincos_pos_embed(embed_dim: int, length: int, cls_token: bool = False
 def get_2d_sincos_pos_embed_rectangle(embed_dim: int,
                                       grid_hw: Tuple[int, int],
                                       cls_token: bool = False) -> np.ndarray:
-    """
-    Return a [H*W, D] (or [1+H*W, D]) matrix with fixed 2-D sine-cosine embeddings.
-
-    Args
-    ----
-    embed_dim : total embedding dimension D
-    grid_hw   : (H, W) = (#rows, #cols) of the spatial grid
-    cls_token : prepend one row of zeros for a CLS token if True
-    """
     h, w = grid_hw
     grid_y = np.arange(h, dtype=np.float32)
     grid_x = np.arange(w, dtype=np.float32)

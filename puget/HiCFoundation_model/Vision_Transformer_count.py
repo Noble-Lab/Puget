@@ -14,8 +14,6 @@ import timm.models.vision_transformer
 from .pos_embed import convert_count_to_pos_embed_cuda
 
 class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
-    """ Vision Transformer with support for global average pooling
-    """
     def __init__(self,  **kwargs):
         super(VisionTransformer, self).__init__(**kwargs)
         self.patch_size = kwargs['patch_size']

@@ -1,0 +1,9 @@
+checkpoint: data/trained_models/borzoi_split/seqonly_borzoi_best.pt
+model_name: seq_only_borzoi
+embedding_key: borzoi_rep0_524k_trunk
+split_family: borzoi
+test_seq: outputs/seq_embeddings/borzoi_embeddings_524k_1kb_mean/human_seq_embeddings_borzoi_rep0_524k_trunk_1kb_mean_test.npy
+test_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_test.bedpe
+biosample_log: outputs/borzoi_data/RNA_label_columns.log
+output_dir: outputs/borzoi_split_inference/seq_only_borzoi
+batch_size: 32

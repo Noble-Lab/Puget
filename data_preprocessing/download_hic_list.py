@@ -9,9 +9,19 @@ import os
 import argparse
 
 def parse_hiclist(hiclist_path):
-    hic_list = pd.read_csv(hiclist_path, names = ["Hi-C Accession"])
-    print(len(hic_list))
-    return hic_list["Hi-C Accession"].to_list()
+    hic_list = pd.read_csv(hiclist_path)
+    if "Hi-C accession" in hic_list.columns:
+        accessions = hic_list["Hi-C accession"]
+    elif len(hic_list.columns) == 1:
+        # Preserve support for the original headerless, one-column lists.
+        accessions = pd.read_csv(hiclist_path, header=None).iloc[:, 0]
+        accessions = accessions[~accessions.isin(("Hi-C Accession", "Hi-C accession"))]
+    else:
+        raise ValueError(f"{hiclist_path} must contain a 'Hi-C accession' column")
+    datasets = accessions.dropna().astype(str).str.strip()
+    datasets = datasets[datasets.ne("")].to_list()
+    print(len(datasets))
+    return datasets
     
 def download_encode(output_dir, url):
     root_path = os.getcwd()
@@ -30,7 +40,8 @@ def download_hic(dataset_list, output_dir):
 def main():
     parser = argparse.ArgumentParser(description="Download Hi-C datasets based on a provided CSV file.")
     
-    parser.add_argument("--hiclist_path", type=str, required=True, help="Path to the hic list file.")
+    parser.add_argument("--hiclist_path", type=str, required=True,
+                        help="Path to deeply_profiled.csv or a one-column Hi-C accession list.")
     parser.add_argument("--output_dir", type=str, required=True, help="Directory where downloaded Hi-C files will be saved.")
     
     args = parser.parse_args()

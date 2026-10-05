@@ -1,0 +1,33 @@
+embedding: enformer_official_196k_post_pointwise
+embed_root: outputs/seq_embeddings
+run_name: seqonly_enformer
+output_dir: outputs/enformer_split
+biosample_set: 14bio
+lrs:
+- 1.0e-05
+batch_size: 32
+epochs: 50
+warmup_epochs: 5
+min_lr: 1.0e-07
+weight_decay: 0.01
+grad_clip: 1.0
+seed: 42
+proj_dim: 512
+num_heads: 8
+num_layers: 4
+mlp_ratio: 4.0
+dropout: 0.2
+promoter_tokens: 4
+input_norms:
+- layernorm
+output_activations:
+- softplus
+attn: sdpa
+precision: bf16
+data_device: cpu
+headroom_gb: 14.0
+num_workers: 4
+pin_memory: false
+no_wandb: true
+wandb_project: PaperSeqOnlySoftplus14bio
+label_dir: outputs/enformer_data

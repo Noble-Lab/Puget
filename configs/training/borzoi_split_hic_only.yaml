@@ -1,0 +1,80 @@
+seed: 42
+run_name: hicfoundation_borzoi
+output_dir: outputs/borzoi_split
+data:
+  input_semantics: raw_none
+  hic_root: outputs/hic_windows/hicfoundation_borzoi
+  biosamples_csv: data/deeply_profiled.csv
+  train_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_train.bedpe
+  valid_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_valid.bedpe
+  train_label: outputs/borzoi_data/traincell_traingene.npy
+  valid_label: outputs/borzoi_data/traincell_validgene.npy
+  train_label_group: traincell
+  valid_label_group: traincell
+  size: 512
+  window_bp: 524288
+  skip_missing_hic: true
+  test_bedpe: outputs/borzoi_data/Borzoi_genes_524k_524k_test.bedpe
+  test_label: outputs/borzoi_data/testcell_testgene.npy
+split:
+  train_biosamples: &id001
+  - A673
+  - Caco-2
+  - Calu3
+  - HCT116
+  - HepG2
+  - IMR-90
+  - MCF 10A
+  - MCF-7
+  - OCI-LY7
+  - PC-3
+  - PC-9
+  - Panc1
+  - endothelial cell of umbilical vein
+  - mammary epithelial cell
+  validation_biosamples: *id001
+  test_biosamples:
+  - GM12878
+  - K562
+encoder:
+  checkpoint_path: data/trained_models/hicfoundation_pretrain.pth.tar
+  model_name: vit_large_patch16
+  input_size: 512
+  patch_size: 16
+  embed_dim: 1024
+  grid_rows: 32
+  grid_cols: 32
+  freeze: true
+  force_fp32: false
+decoder:
+  output_dim: 1
+  proj_dim: 512
+  mlp_ratio: 4.0
+  num_heads: 8
+  num_layers: 4
+  pool_method: cls
+  dropout: 0.2
+  output_activation: softplus
+training:
+  use_wandb: false
+  wandb_project: PaperHiCFoundationRawSoftplus14Bio
+  optimizer: adamw
+  lr: 5.0e-05
+  min_lr: 1.0e-07
+  weight_decay: 0.01
+  warmup_epochs: 2
+  decay_epochs: 18
+  max_epochs: 20
+  batch_size: 128
+  accumulate_grad_batches: 1
+  num_workers: 4
+  prefetch_factor: 2
+  persistent_workers: true
+  pin_memory: true
+  patience: 40
+  val_check_interval: 0.5
+  precision: 16-mixed
+  gradient_clip_val: 1.0
+  log_every_n_steps: 20
+  deterministic: false
+  float32_matmul_precision: high

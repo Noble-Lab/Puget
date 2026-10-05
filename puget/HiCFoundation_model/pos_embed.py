@@ -16,11 +16,6 @@ import torch
 # --------------------------------------------------------
 
 def get_2d_sincos_pos_embed(embed_dim, grid_size, cls_token=False):
-    """
-    grid_size: int of the grid height and width
-    return:
-    pos_embed: [grid_size*grid_size, embed_dim] or [1+grid_size*grid_size, embed_dim] (w/ or w/o cls_token)
-    """
     grid_h = np.arange(grid_size, dtype=np.float32)
     grid_w = np.arange(grid_size, dtype=np.float32)
     grid = np.meshgrid(grid_w, grid_h)  # here w goes first
@@ -33,9 +28,6 @@ def get_2d_sincos_pos_embed(embed_dim, grid_size, cls_token=False):
     return pos_embed
 
 def get_2d_sincos_pos_embed_rectangle(embed_dim, grid_size,cls_token=False):
-    """
-    grid_size, a tuple of height and width
-    """
     grid_size_h, grid_size_w = grid_size
     grid_h = np.arange(grid_size_h, dtype=np.float32)
     grid_w = np.arange(grid_size_w, dtype=np.float32)
@@ -60,11 +52,6 @@ def get_2d_sincos_pos_embed_from_grid(embed_dim, grid):
 
 
 def get_1d_sincos_pos_embed_from_grid(embed_dim, pos):
-    """
-    embed_dim: output dimension for each position
-    pos: a list of positions to be encoded: size (M,)
-    out: (M, D)
-    """
     assert embed_dim % 2 == 0
     omega = np.arange(embed_dim // 2, dtype=np.float32)
     omega /= embed_dim / 2.
@@ -80,10 +67,6 @@ def get_1d_sincos_pos_embed_from_grid(embed_dim, pos):
     return emb
 
 def convert_count_to_pos_embed(count, embed_dim):
-    """
-    #count should be log formated
-    count: (N,1)
-    """
     assert embed_dim % 2 == 0
     omega = np.arange(embed_dim // 2, dtype=np.float32)
     omega = omega/ embed_dim / 2.
@@ -99,10 +82,6 @@ def convert_count_to_pos_embed(count, embed_dim):
     return emb
 
 def convert_count_to_pos_embed_cuda(count, embed_dim):
-    """
-    #count should be log formated
-    count: (N,1)
-    """
     assert embed_dim % 2 == 0
     omega = torch.arange(embed_dim // 2, dtype=count.dtype,device=count.device)
     omega = omega/ embed_dim / 2.

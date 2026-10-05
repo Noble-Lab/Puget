@@ -1,0 +1,6 @@
+training_config: configs/training/enformer_split_puget.yaml
+checkpoint: data/trained_models/enformer_split/puget_enformer_best.ckpt
+output_dir: outputs/enformer_split_inference/puget
+group: both
+batch_size: 128
+num_workers: 4
